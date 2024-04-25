@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OOPDice2
 {
-    internal class Die
+    internal class Die 
     {
 
         //Property
 
-        public int Value = 0;
+        public int Value = 0;               // this is the value of the dice 
 
         ///<summary>
         /// This generates the random number for my dice between 1 and 6 
@@ -28,23 +29,7 @@ namespace OOPDice2
             return Value;
         }
 
-
+        
 
     }
 }
-//if (die1.Value == pair2)
-//{
-
-//    Score2 = Score2 + 3;        // this addss the points if the reroll makes 3 
-//    winner2 = Score2;
-
-
-//}
-
-//if (die1.Value == pair)
-//{
-//    Score = Score + 3;   // this may be why there getting 3 points what is this ??????/
-//    winner = Score;
-//    // think this is giving the points if the new roll makes 3 matching 
-
-//}

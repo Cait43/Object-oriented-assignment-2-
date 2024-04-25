@@ -1,4 +1,6 @@
 ﻿using System;
+using System.CodeDom;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -8,146 +10,69 @@ using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.Xml.Schema;
 
 namespace OOPDice2
 {
-    class Statistics : SevenOut 
+    class Statistics 
     {
-        int P1Wins3 = 0; 
-        int P2Wins3 = 0;
-        string[] File = { };
-        List<int> MainList = new List<int>();
-        int len = 0;
+        public List<int> Highscores = new List<int>();                                          // this is my list of highscores 
+        
+        /// <summary>
+        /// this shows the statistics for the seven out game 
+        /// </summary>
+        /// <param name="seven"></param>
+        /// <returns></returns>
 
-
-
-
-
-        public int Stats7()
+        public int Stats7(SevenOut seven)
         {
-            SevenOut s = new SevenOut();
-            int num = s.numOfPlays;
+            int length = Highscores.Count();                                                    // this gives me the length of the highscores list 
+            Highscores.Sort();                                                                  // this sorts the high scores so they are in order smallest to largest 
+            Highscores.Reverse();                                                               // this swaps the list to that the largest (highscore) is at the top  
 
-            Console.WriteLine("Statistics7");               // for testing purposes 
+            Console.WriteLine("Statistics for seven out ");                                     // this says which statistics are being shown 
 
-            Console.WriteLine("Player vs Player stats");
-            //Console.WriteLine("Number of wins Player 1: ");
-            //Console.WriteLine(P1Wins7);
-            //Console.WriteLine("Number of wins Player 2: ");
-            //Console.WriteLine(P2Wins7);
-            //Console.WriteLine("Total wins in seven out by a player: ");
-            //Console.WriteLine(SevenWinsTotal);
-
-            try
+            Console.WriteLine("Number of wins Player 1: " + seven.P1Wins7);                     // this prints the number of times player 1 has won a game of 7 out 
+            Console.WriteLine("Number of wins Player 2: " + seven.P2Wins7);                     // this prints the number of times player 2 has won a game of 7 out
+            int total7 = seven.P1Wins7 + seven.P2Wins7;                                         // this works out the total of wins in seven out by a player (computer not included)
+            Console.WriteLine("Total wins in seven out (computer wins not added): " + total7);  // this prints the number of wins 
+            Console.WriteLine($"Number of plays: {seven.numOfPlays}");                          // this prints how many times the game has been played
+            if (length > 0)                                                                     // this checks to see if the highscores list is empty 
             {
-                while (len < num)
-                {
-                    StreamWriter sw = new StreamWriter("C:\\Users\\Caitlin Mitchell\\source\\repos\\OOPDice2\\OOPDice2\\bin\\Debug\\test.txt");
-                    sw.WriteLine("1");
-                    sw.Close();
-                    len++;
-                }
-
-
+                Console.WriteLine($"Player Highscore: {Highscores[0]}");                        // if the list isn't empty it prints the first number in the list (the biggest)
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine("Exception: " + e.Message);
+                Console.WriteLine($"Player Highscore: *no data yet*");                          // if the list is empty it will show no data yet to avoid crashing printing a list with nothing in it 
             }
-
-
-            string filepath = "C:\\Users\\Caitlin Mitchell\\source\\repos\\OOPDice2\\OOPDice2\\bin\\Debug\\test.txt";      // this is the file its getting the data from 
-            File = ReadFile(filepath);                       // this puts the result of the method in the array
-
-            foreach (string item in File)
-            {
-                int toInt = Int32.Parse(item);                      // this sets all the numbers in the file to integers
-                MainList.Add(toInt);                                // this adds the integers to MainList
-            }
-
-            Console.WriteLine($"Number of plays: {MainList.Count}");    // this prints how many high scores it has saved (how many times the game has been played)
-            //Console.WriteLine($"highscore: {MainList[-1]}");            // this will show the last number added to the list (the highscore) will need to order the list 
-
-
-            // this is for adding to the txt file for highscores exists in seven out where the totals are shown 
-            try
-            {
-
-                StreamWriter sw = new StreamWriter("C:\\Users\\Caitlin Mitchell\\source\\repos\\OOPDice2\\OOPDice2\\bin\\Debug\\highscores.txt");
-                Console.Write("Highscore: ");
-                sw.WriteLine(" top number of sorted list ");
-                sw.Close();
-
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception: " + e.Message);
-            }
-
-
-            // bubble sort to orgonise the high scores so the highest is at the top
-
-            //List<int> SortedList = new List<int>();
-            //List<int> sorted(List<int> b, int n)
-            //{
-            //    bool swap = true;
-            //    while (swap == true)                                                // biggest to smallest (deccending)
-            //    {
-            //        swap = false;                                                   // this bool will allows the code to exit the loop once its finished 
-            //        for (int i = 0; i < n - 1; i++)                                 // for as long as i is less than n - 1 keep running the loop 
-            //        {
-
-
-            //            if (b[i + 1] > b[i])
-            //            {
-            //                int temp = b[i];                                        // this puts the number in to temporary storage 
-            //                b[i] = b[i + 1];                                        // this puts the next number in its place 
-            //                b[i + 1] = temp;                                        // this moves the next number in to temporary storage 
-
-            //                swap = true;                                            // this will keep the loop going 
-            //            }
-
-            //        }
-            //        return b;
-
-
-            //    }
-            //}
-
+            Console.WriteLine();                                                                // this will leave a blank line in the terminal just to separate things a bit more making it easier to see 
             
-
-            // this will show high scores, number of game plays for seven up 
+            
 
             return 0;
         }
 
-        
+        /// <summary>
+        /// this shows the statistics for the three or more game 
+        /// </summary>
+        /// <param name="three"></param>
+        /// <returns></returns>
 
-        public string[] ReadFile(string filepath)
+        public int Stats3(ThreeOrMore three)
         {
-            StreamReader reader = new StreamReader(filepath);
-            string Number = reader.ReadLine();
-            List<string> Data = new List<string>();           // this is my list 
+            
 
-            while (Number != null)                              // while statement to add the numbers to my list 
-            {
-                Data.Add(Number);
-                Number = reader.ReadLine();                     // this checks the next line in the file 
-            }
+            Console.WriteLine("Statistics for three or more ");                                 // this says which statistics are being shown 
 
+            Console.WriteLine("Number of wins Player 1: " + three.P1Wins3);                     // this prints the number of times player 1 has won a game of 3 or more 
+            Console.WriteLine("Number of wins Player 2: " + three.P2Wins3);                     // this prints the number of times player 2 has won a game of 3 or more 
+            int total3 = three.P1Wins3 + three.P2Wins3;                                         // this adds the total number of wins 
+            Console.WriteLine("Total wins in seven out (computer wins not added): " + total3);  // this prints the number of wins
+            Console.WriteLine($"Number of plays: {three.numOfPlays3}");                         // this prints how many times the game has been played
+            
+            Console.WriteLine();                                                                // this will leave a blank line in the terminal just to separate things a bit more making it easier to see 
 
-            return Data.ToArray();
-
-        }
-
-        
-
-        public int Stats3()
-        {
-            Console.WriteLine("Statistics3");
-
-            // this will show high scores, number of game plays for three or more  
 
             return 0;
         }

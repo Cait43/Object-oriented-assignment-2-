@@ -1,149 +1,170 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace OOPDice2
 {
-    class Game                        
+    class Game : Statistics                                                 // this class inherits the statistics class 
     {
         
-        ///<summary>
-        /// This will be a menu for players to pick which game they are going to play/ see score / test the game 
-        ///</summary>
+        
 
         //Methods
-        string input = "no input given";
-        string testingInput = "test?";
-        string statsInput = "stats";
-        bool statBool = false;
-        bool testBool = false;
-        bool inputBool = false;
+        string input = "no input given";                                    // this is used to store the input chosen for wich game to play 
+        string testingInput = "test?";                                      // this is used to store the input for running the testing class or not  
+        string statsInput = "stats";                                        // this is used to store the input for running statistics class or not 
+        bool statBool = false;                                              // this is used to loop the run statistics question incase of incorrect input 
+        bool testBool = false;                                              // this is used to loop the run tests question incase of incorrect input
+        bool inputBool = false;                                             // this is used to loop the wich game would you like to play question incase of incorrect input 
+       
 
-        static void Main(string[] args)             // this is the first thing that runs 
+        SevenOut seven = new SevenOut();                                    // this calls my seven out class 
+        ThreeOrMore three = new ThreeOrMore();                              // this calls my thre eor more class 
+        Testing t = new Testing();                                          // this calls my testing class
+
+        /// <summary>
+        /// this is the first thing to run and calls my menu 
+        /// </summary>
+        /// <param name="args"></param>
+        static void Main(string[] args)
         {
 
             // testing object 
-            Game g = new Game();
-            g.StartMenu();                          // this calls my start menu class to ask what game you would like to play 
+            Statistics s = new Statistics();                                // this calls my statistics class 
+            Game g = new Game();                                            // this callls the game class so i can go back to the menu when the game is finished
+            g.StartMenu(g);                                                 // this calls my start menu class to ask what game you would like to play 
 
-            Console.ReadLine();         // this reads the code so it can run 
+            Console.ReadLine();                                             // this reads the code so it can run 
         }
-        public int StartMenu()            
+
+        ///<summary>
+        /// This is a menu for players to pick which game they are going to play/ see score / test the game 
+        ///</summary>
+        public int StartMenu(Game g)            
         {
-            while (inputBool == false)
+            inputBool = false;                                              // this makes sure the value of inputbool is re-set to false every time so the loop still runs 
+
+            while (inputBool == false)                                      // if inoutbool is false run this 
             {
                 Console.WriteLine("Which game would you like to play? (7,3)");
-                input = Console.ReadLine();
+                input = Console.ReadLine();                                 // this asigns the player input to input 
 
-                if (input == "7")
+                if (input == "7")                                           // if the input is 7 it will run the questions for the seven out game 
                 {
-                    inputBool = true;
+                    inputBool = true;                                       // this sest inputbool to true to close the loop 
+                    
+                    statBool = false;                                       // this makes sure the value of statbool is re-set to false every time so the loop still runs
 
-                    while (statBool == false)
+                    while (statBool == false)                               // if statbool is false this runs 
                     {
-                        Console.WriteLine("Would you like to see the statistics? (y, n)");      //# this is showing when the game finisheds not before ?
-                        statsInput = Console.ReadLine();
+                        Console.WriteLine("Would you like to see the statistics? (y, n)");      
+                        statsInput = Console.ReadLine();                    // this asigns the player input to stats input 
 
-                        if (statsInput == "y")
+                        if (statsInput == "y")                              // if statsinput is y (yes) it runs calls the statistics method for seven out 
                         {
-                            Statistics s = new Statistics();
-                            s.Stats7();
-                            statBool = true;
+                            
+                            seven.Stats7(seven);                            // this calls the statistics method for seven out 
+                            statBool = true;                                // this sets statsbool to true to break the loop 
                         }
-                        else if (statsInput == "n")
+                        else if (statsInput == "n")                         // if the statsinput is n (no) noting runs 
                         {
-                            statBool = true;
+                            statBool = true;                                // statbool is set to true to break the loop 
                         }
-                        else
+                        else                                                // if neither option was chosen its an incorrect input
                         {
-                            Console.WriteLine("incorrect input");
-                            statBool = false;
+                            Console.WriteLine("incorrect input");           // this prints to tell the user whats happened  
+                            statBool = false;                               // this makes sure statbool stays false so the loop runs 
                         }
+
                     }
-                    while (testBool == false)
+                    testBool = false;                                       // this makes sure testbool is false 
+
+                    while (testBool == false)                               // if testbool is false run the loop 
                     {
                         Console.WriteLine("Would you like to test the game? (y, n)");
-                        testingInput = Console.ReadLine();
+                        testingInput = Console.ReadLine();                  // this takes the user input for testing game question and asigns it testinginput
 
-                        if (testingInput == "y")
+                        if (testingInput == "y")                            // if testinginput is y (yes) testing class is called 
                         {
-                            Testing t = new Testing();
-                            t.RunningTest();
-                            testBool = true;
+                            t.RunningTest();                                // this calls the method for testing the game 
+                            testBool = true;                                // this sets testbool to true so the loop stop running
                         }
-                        else if (testingInput == "n")
+                        else if (testingInput == "n")                       // if testinginput is n (no) nothing runs 
                         {
-                            testBool = true;
+                            testBool = true;                                // the loop is set to true so it stops running 
                         }
-                        else
+                        else                                                // if its neither then its an incorrect input 
                         {
-                            Console.WriteLine("incorrect input");
-                            testBool = false;
+                            Console.WriteLine("incorrect input");           // this shows to tell the user whats happened 
+                            testBool = false;                               // this keeps the loop as false so it runs again 
                         }
                     }
 
-                    SevenOut seven = new SevenOut();
 
-                    seven.SevenGame();
+                    seven.SevenGame(g);                                     // after all that the seven game runs (thats what was selected first)
                     
                 }
-                else if (input == "3")
+                else if (input == "3")                                      // this runs if 3 was chosen 
                 {
-                    inputBool = true;
+                    inputBool = true;                                       // this sest inputbool to true to close the loop 
 
-                    while (statBool == false)
+                    statBool = false;                                       // this makes sure the value of statbool is re-set to false every time so the loop still runs
+
+                    while (statBool == false)                               // if statbool is false this runs 
                     {
                         Console.WriteLine("Would you like to see the statistics? (y, n)");
-                        statsInput = Console.ReadLine();
+                        statsInput = Console.ReadLine();                    // this asigns the player input to stats input 
 
-                        if (statsInput == "y")
+                        if (statsInput == "y")                              // if statsinput is y (yes) it runs calls the statistics method for three or more  
                         {
-                            Statistics s = new Statistics();
-                            s.Stats3();
-                            statBool = true;
+
+                            seven.Stats3(three);                            // this calls the statistics method for three or more  
+                            statBool = true;                                // this sets statsbool to true to break the loop 
                         }
-                        else if (statsInput == "n")
+                        else if (statsInput == "n")                         // if the statsinput is n (no) noting runs 
                         {
-                            statBool = true;
+                            statBool = true;                                // statbool is set to true to break the loop 
                         }
-                        else
+                        else                                                // if neither option was chosen its an incorrect input
                         {
-                            Console.WriteLine("incorrect input");
-                            statBool = false;
+                            Console.WriteLine("incorrect input");           // this prints to tell the user whats happened  
+                            statBool = false;                               // this makes sure statbool stays false so the loop runs 
                         }
+
                     }
-                    while (testBool == false)
+                    testBool = false;                                       // this makes sure testbool is false 
+
+                    while (testBool == false)                               // if testbool is false run the loop 
                     {
                         Console.WriteLine("Would you like to test the game? (y, n)");
-                        testingInput = Console.ReadLine();
+                        testingInput = Console.ReadLine();                  // this takes the user input for testing game question and asigns it testinginput
 
-                        if (testingInput == "y")
+                        if (testingInput == "y")                            // if testinginput is y (yes) testing class is called 
                         {
-                            Testing t = new Testing();
-                            t.RunningTest();
-                            testBool = true;
+                            t.RunningTest();                                // this calls the method for testing the game 
+                            testBool = true;                                // this sets testbool to true so the loop stop running
                         }
-                        else if (testingInput == "n")
+                        else if (testingInput == "n")                       // if testinginput is n (no) nothing runs 
                         {
-                            testBool = true;
+                            testBool = true;                                // the loop is set to true so it stops running 
                         }
-                        else
+                        else                                                // if its neither then its an incorrect input 
                         {
-                            Console.WriteLine("incorrect input");
-                            testBool = false;
+                            Console.WriteLine("incorrect input");           // this shows to tell the user whats happened 
+                            testBool = false;                               // this keeps the loop as false so it runs again 
                         }
                     }
-                    ThreeOrMore three = new ThreeOrMore();
 
-                    three.ThreePlusGame();
+                    three.ThreePlusGame(g);                                 // after eveythings run the three or more game runs (thats what was originally chosen)
                 }
-                else
+                else                                                        // if neither option was chosen (3/7) tihs runs
                 {
-                    inputBool = false;
-                    Console.WriteLine("incorrect input");
+                    inputBool = false;                                      // input bool is set to false to make sure the loop still runs 
+                    Console.WriteLine("incorrect input");                   // incorrect input is shown to the user to say whats happened 
                 }
             }
 
