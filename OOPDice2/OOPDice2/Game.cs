@@ -12,8 +12,6 @@ namespace OOPDice2
     {
         
         
-
-        //Methods
         string input = "no input given";                                    // this is used to store the input chosen for wich game to play 
         string testingInput = "test?";                                      // this is used to store the input for running the testing class or not  
         string statsInput = "stats";                                        // this is used to store the input for running statistics class or not 
@@ -33,8 +31,6 @@ namespace OOPDice2
         static void Main(string[] args)
         {
 
-            // testing object 
-            Statistics s = new Statistics();                                // this calls my statistics class 
             Game g = new Game();                                            // this callls the game class so i can go back to the menu when the game is finished
             g.StartMenu(g);                                                 // this calls my start menu class to ask what game you would like to play 
 
