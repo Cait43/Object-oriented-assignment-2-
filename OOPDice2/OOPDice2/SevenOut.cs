@@ -298,7 +298,7 @@ namespace OOPDice2
                     else                                                                    // this runs if neither of the players have the higher score 
                     {
                         Console.WriteLine("It's a tie !");                                  // this tells the players that there's a tie 
-                        Console.WriteLine("Player 1 & Player 2: " + P1Total);               // this will show if both scores are the same 
+                        Console.WriteLine("Player 1 & computer: " + P1Total);               // this will show if both scores are the same 
                         numOfPlays++;                                                       // this adds 1 to the number of games played 
                         P1Wins7++;                                                          // this adds one to the number of wins for both players 
                         P2Wins7++;
