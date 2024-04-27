@@ -271,7 +271,7 @@ namespace OOPDice2
                     if (P1Total > P2Total)                                                  // if player 1's score is higher run this ... 
                     {
                         Console.WriteLine("Gameover player 1 wins!");                       // this prints so that the players know who won 
-                        Console.WriteLine("Player 1: " + P1Total + " Player 2: " + P2Total);       // this will show both player scores 
+                        Console.WriteLine("Player 1: " + P1Total + " computer: " + P2Total);       // this will show both player scores 
                         numOfPlays++;                                                       // this will add 1 to the number of times the game has been played 
                         P1Wins7++;                                                          // this adds 1 to the number of times player 1 has won 
 
@@ -282,8 +282,8 @@ namespace OOPDice2
                     }
                     else if (P1Total < P2Total)                                             // this will run if player 2's score is higher than player 1's score 
                     {
-                        Console.WriteLine("Gameover player 2 wins!");                       // this runs to show the users whos won 
-                        Console.WriteLine("Player 2: " + P2Total + " Player 1: " + P1Total);       // this will show both players scores 
+                        Console.WriteLine("Gameover computer wins!");                       // this runs to show the users whos won 
+                        Console.WriteLine("computer: " + P2Total + " Player 1: " + P1Total);       // this will show both players scores 
                         numOfPlays++;                                                       // this will increase the number of times the game has been played 
                         P2Wins7++;                                                          // this adds 1 to the number of times player 2 has won 
 
