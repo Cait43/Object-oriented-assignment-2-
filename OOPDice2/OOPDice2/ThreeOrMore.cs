@@ -893,7 +893,7 @@ namespace OOPDice2
         /// <returns></returns>
         public List<int> Die25()                                // 5 dice rolls for player 2 
         {
-            listOfRolls.Clear();
+            listOfRolls2.Clear();
 
             die1.Roll();
             listOfRolls2.Add(die1.Value);
